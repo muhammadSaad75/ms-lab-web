@@ -1,44 +1,54 @@
-name: Build and deploy to mslabs.online
 
-# The live site is served by GitHub Pages from muhammadSaad75/ms-labs-website (main branch, root).
-# Every push here (including posts saved in Pages CMS) builds the site and pushes dist/ to that repo.
-# Needs the secret LIVE_SITE_DEPLOY_KEY: the private half of a deploy key that has write access
-# on ms-labs-website.
+name: Build and deploy to mslabs.online
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 concurrency:
-  group: deploy
+  group: github-pages
   cancel-in-progress: true
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
-      - run: npm run build
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build website
+        run: npm run build
         env:
-          # Served from the root of the custom domain (public/CNAME)
           BASE_PATH: /
-      - uses: peaceiris/actions-gh-pages@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          deploy_key: ${{ secrets.LIVE_SITE_DEPLOY_KEY }}
-          external_repository: muhammadSaad75/ms-labs-website
-          publish_branch: main
-          publish_dir: ./dist
-          # Replace the whole site each time so deleted pages disappear; dist/ includes CNAME
-          keep_files: false
-          user_name: github-actions[bot]
-          user_email: 41898282+github-actions[bot]@users.noreply.github.com
-          full_commit_message: "Deploy ${{ github.sha }}: ${{ github.event.head_commit.message }}"
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
