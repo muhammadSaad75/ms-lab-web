@@ -15,5 +15,5 @@ Posts are rendered to HTML at build time, prerendered, and added to the sitemap 
 SEO: page titles, descriptions and structured data live in src/config/seo.ts. `npm run build` prerenders every
 route to static HTML (dist/<route>/index.html), plus a real 404.html and sitemap.xml — so new products appear
 in the sitemap automatically. Products with status 'coming-soon' are noindex and left out of the sitemap.
-Deploy: pushing to main deploys to GitHub Pages (.github/workflows/deploy.yml). On Apache/Hostinger instead,
-upload the CONTENTS of dist/ (incl. .htaccess) to public_html.
+Deploy: pushing to main builds the site and pushes dist/ to muhammadSaad75/ms-labs-website, which serves
+mslabs.online via GitHub Pages (.github/workflows/deploy.yml; needs the LIVE_SITE_DEPLOY_KEY secret).
