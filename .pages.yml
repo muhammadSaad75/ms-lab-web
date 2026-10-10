@@ -14,11 +14,11 @@ content:
     type: collection
     path: src/content/blog
     format: yaml-frontmatter
-    # The filename is the post URL (/blog/<filename>/). Suggested from the title; editable only when creating,
-    # because renaming later would break links and lose rankings.
-    filename:
-      template: "{primary}.md"
-      field: create
+    # The filename is the post URL (/blog/<filename>/). It is generated from the title,
+    # so check it before saving and shorten it to a clean slug, because renaming later
+    # would break links and lose rankings.
+    filename: "{primary}.md"
+    extension: md
     view:
       primary: title
       fields: [title, date, draft]
@@ -56,14 +56,14 @@ content:
         description: Optional. Adds a box at the end of the post linking to this service page.
         options:
           values:
-            - { name: mobile-app-development, label: Mobile App Development }
-            - { name: react-native-development, label: React Native Development }
-            - { name: web-application-development, label: Web Application Development }
-            - { name: backend-api-development, label: Backend & API Development }
-            - { name: api-integrations, label: Third-Party API Integration }
-            - { name: sdk-development, label: SDK Development }
-            - { name: app-performance-optimization, label: App Performance Optimization }
-            - { name: maintenance-support, label: Maintenance & Support }
+            - { value: mobile-app-development, label: Mobile App Development }
+            - { value: react-native-development, label: React Native Development }
+            - { value: web-application-development, label: Web Application Development }
+            - { value: backend-api-development, label: Backend & API Development }
+            - { value: api-integrations, label: Third-Party API Integration }
+            - { value: sdk-development, label: SDK Development }
+            - { value: app-performance-optimization, label: App Performance Optimization }
+            - { value: maintenance-support, label: Maintenance & Support }
       - name: draft
         label: Draft (not published)
         type: boolean
