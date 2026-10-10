@@ -1,0 +1,76 @@
+# Pages CMS (https://app.pagescms.org) — a dashboard for writing blog posts without touching code.
+# Saving a post commits a Markdown file to src/content/blog/ on main, which triggers the GitHub Pages deploy.
+# Fields mirror the frontmatter read by scripts/markdown.ts; keep the `service` values in sync with
+# the slugs in src/data/services.ts.
+media:
+  input: public/images/blog
+  output: /images/blog
+  categories: [image]
+  rename: safe
+
+content:
+  - name: blog
+    label: Blog posts
+    type: collection
+    path: src/content/blog
+    format: yaml-frontmatter
+    # The filename is the post URL (/blog/<filename>/). Suggested from the title; editable only when creating,
+    # because renaming later would break links and lose rankings.
+    filename:
+      template: "{primary}.md"
+      field: create
+    view:
+      primary: title
+      fields: [title, date, draft]
+      sort: date
+      order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+        description: Shown as the page heading. Aim for under 60 characters and include the phrase people search for.
+      - name: description
+        label: Meta description
+        type: text
+        required: true
+        description: The summary Google shows under the title. 140–160 characters.
+        options:
+          maxlength: 160
+      - name: date
+        label: Publish date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: updated
+        label: Last updated
+        type: date
+        default: ""
+        description: Optional. Set this when you make a meaningful update to an older post.
+        options:
+          format: yyyy-MM-dd
+      - name: service
+        label: Related service
+        type: select
+        description: Optional. Adds a box at the end of the post linking to this service page.
+        options:
+          values:
+            - { name: mobile-app-development, label: Mobile App Development }
+            - { name: react-native-development, label: React Native Development }
+            - { name: web-application-development, label: Web Application Development }
+            - { name: backend-api-development, label: Backend & API Development }
+            - { name: api-integrations, label: Third-Party API Integration }
+            - { name: sdk-development, label: SDK Development }
+            - { name: app-performance-optimization, label: App Performance Optimization }
+            - { name: maintenance-support, label: Maintenance & Support }
+      - name: draft
+        label: Draft (not published)
+        type: boolean
+        default: false
+      - name: body
+        label: Article
+        type: rich-text
+        description: Start sections with Heading 2 — the title above is already the page's main heading.
+        options:
+          format: markdown

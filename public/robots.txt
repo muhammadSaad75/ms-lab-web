@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mslabs.online/sitemap.xml

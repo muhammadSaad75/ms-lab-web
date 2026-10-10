@@ -1,0 +1,34 @@
+@import "tailwindcss";
+@theme{--color-bg:#070a12;--color-card:#0e1320;--color-line:#1c2438;--color-brand:#6d7dff;--color-brand2:#22d3ee}
+html{scroll-behavior:smooth;background:#070a12;color:#cbd5e1}
+body{overflow-x:hidden;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.grad-text{background:linear-gradient(90deg,#8b98ff,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+@keyframes drift{50%{transform:translate(30px,-20px)}}
+.blob{animation:drift 20s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.blob{animation:none}html{scroll-behavior:auto}}
+/* Hero entrance in CSS (not JS) so the prerendered headline paints immediately */
+@keyframes rise{from{opacity:0;transform:translateY(24px)}}
+.rise{animation:rise .7s ease-out both}
+@media(prefers-reduced-motion:reduce){.rise{animation:none}}
+/* Blog article body (HTML rendered from Markdown at build time) */
+.prose{color:#cbd5e1;font-size:1.0625rem;line-height:1.8;overflow-wrap:break-word}
+.prose>*+*{margin-top:1.25em}
+.prose h2{margin-top:2.2em;font-size:1.6rem;line-height:1.3;font-weight:600;color:#fff;letter-spacing:-.01em}
+.prose h3{margin-top:1.8em;font-size:1.25rem;line-height:1.4;font-weight:600;color:#fff}
+.prose h2+*,.prose h3+*{margin-top:.75em}
+.prose a{color:#8b98ff;text-decoration:underline;text-underline-offset:3px}
+.prose a:hover{color:#22d3ee}
+.prose strong{color:#fff;font-weight:600}
+.prose ul,.prose ol{padding-left:1.4em}
+.prose ul{list-style:disc}.prose ol{list-style:decimal}
+.prose li+li{margin-top:.4em}
+.prose li::marker{color:#6d7dff}
+.prose blockquote{border-left:3px solid #6d7dff;padding-left:1em;color:#94a3b8;font-style:italic}
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#0e1320;border:1px solid #1c2438;border-radius:.375rem;padding:.1em .35em;color:#e2e8f0}
+.prose pre{background:#0e1320;border:1px solid #1c2438;border-radius:.75rem;padding:1em 1.2em;overflow-x:auto;font-size:.9rem;line-height:1.6}
+.prose pre code{background:none;border:0;padding:0}
+.prose img{border-radius:.75rem;border:1px solid #1c2438}
+.prose hr{border-color:#1c2438;margin:2.5em 0}
+.prose table{display:block;overflow-x:auto;border-collapse:collapse;font-size:.95rem}
+.prose th,.prose td{border:1px solid #1c2438;padding:.5em .8em;text-align:left}
+.prose th{color:#fff;background:#0e1320}
